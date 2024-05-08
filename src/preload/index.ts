@@ -5,9 +5,7 @@ if (process.contextIsolated) {
 }
 
 try {
-  contextBridge.exposeInMainWorld('context', {
-    //!
-  })
+  contextBridge.exposeInMainWorld('context', {})
 } catch (e) {
   console.log(e)
 }
