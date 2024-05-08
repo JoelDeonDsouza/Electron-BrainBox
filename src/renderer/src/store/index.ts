@@ -18,3 +18,26 @@ export const selectedIdeaAtom = atom((get) => {
     content: `Welcome to BrainBox! ${selectedIdeaIndex}`
   }
 })
+
+export const createEmptyIdeaAtom = atom(null, (get, set) => {
+  const ideas = get(IdeasAtom)
+  const title = `Ideas at ${ideas.length + 1}`
+  const newIdea: IdeaInfo = {
+    title,
+    lastUpdated: Date.now()
+  }
+  // update //
+  set(IdeasAtom, [newIdea, ...ideas.filter((idea) => idea.title !== newIdea.title)])
+  set(selectedIdeaIndexAtom, 0)
+})
+
+export const deleteIdeaAtom = atom(null, (get, set) => {
+  const ideas = get(IdeasAtom)
+  const selectedIdea = get(selectedIdeaAtom)
+  if (!selectedIdea) return
+  set(
+    IdeasAtom,
+    ideas.filter((idea) => idea.title !== selectedIdea.title)
+  )
+  set(selectedIdeaIndexAtom, null)
+})
