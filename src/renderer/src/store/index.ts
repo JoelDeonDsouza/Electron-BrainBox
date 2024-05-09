@@ -1,26 +1,46 @@
-import { ideasMock } from '@/store/mocks'
 import { IdeaInfo } from '@shared/models'
 import { atom } from 'jotai'
+import { unwrap } from 'jotai/utils'
+
+const loadIdeas = async () => {
+  const ideas = await window.context.getIdeas()
+  // categorise the recently loaded //
+  return ideas.sort((a, b) => b.lastUpdated - a.lastUpdated)
+}
+
+const ideasAtomAsync = atom<IdeaInfo[] | Promise<IdeaInfo[]>>(loadIdeas())
 
 // get the idea info //
-export const IdeasAtom = atom<IdeaInfo[]>(ideasMock)
+export const IdeasAtom = unwrap(ideasAtomAsync, (prev) => prev)
 
 // get the list //
 export const selectedIdeaIndexAtom = atom<number | null>(null)
 
-export const selectedIdeaAtom = atom((get) => {
+const selectedIdeaAtomAsync = atom(async (get) => {
   const ideas = get(IdeasAtom)
   const selectedIdeaIndex = get(selectedIdeaIndexAtom)
-  if (selectedIdeaIndex == null) return null
+  if (selectedIdeaIndex == null || !ideas) return null
   const selectedIdea = ideas[selectedIdeaIndex]
+  const ideaContent = await window.context.readIdea(selectedIdea.title)
   return {
     ...selectedIdea,
-    content: `Welcome to BrainBox! ${selectedIdeaIndex}`
+    content: ideaContent
   }
 })
 
+export const selectedIdeaAtom = unwrap(
+  selectedIdeaAtomAsync,
+  (prev) =>
+    prev ?? {
+      title: '',
+      content: '',
+      lastUpdatedAt: Date.now()
+    }
+)
+
 export const createEmptyIdeaAtom = atom(null, (get, set) => {
   const ideas = get(IdeasAtom)
+  if (!ideas) return
   const title = `Ideas at ${ideas.length + 1}`
   const newIdea: IdeaInfo = {
     title,
@@ -34,7 +54,7 @@ export const createEmptyIdeaAtom = atom(null, (get, set) => {
 export const deleteIdeaAtom = atom(null, (get, set) => {
   const ideas = get(IdeasAtom)
   const selectedIdea = get(selectedIdeaAtom)
-  if (!selectedIdea) return
+  if (!selectedIdea || !ideas) return
   set(
     IdeasAtom,
     ideas.filter((idea) => idea.title !== selectedIdea.title)

@@ -1,4 +1,5 @@
 import { useIdeasList } from '@/hooks/useIdeasList'
+import { isEmpty } from 'lodash'
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { IdeaView } from './IdeaView'
@@ -9,7 +10,8 @@ export type IdeaPreviewListProps = ComponentProps<'ul'> & {
 
 export const IdeaViewList = ({ onSelect, className, ...props }: IdeaPreviewListProps) => {
   const { ideas, selectedIdeaIndex, handleIdeaSelect } = useIdeasList({ onSelect })
-  if (ideas.length === 0) {
+  if (!ideas) return null
+  if (isEmpty(ideas)) {
     return (
       <ul className={twMerge('text-center pt-4', className)} {...props}>
         <li>Start crafting</li>
