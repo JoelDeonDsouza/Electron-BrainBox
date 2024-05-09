@@ -9,12 +9,15 @@ import {
 import { useMarkDownEditor } from '@renderer/hooks/useMarkDownEditor'
 
 export const MarkDownEditor = () => {
-  const { selectedIdeaData } = useMarkDownEditor()
+  const { editorRef, selectedIdeaData, handleAutoSave, handleBlur } = useMarkDownEditor()
   if (!selectedIdeaData) return null
   return (
     <MDXEditor
+      ref={editorRef}
       key={selectedIdeaData.title}
       markdown={selectedIdeaData.content}
+      onChange={handleAutoSave}
+      onBlur={handleBlur}
       plugins={[
         headingsPlugin(),
         listsPlugin(),

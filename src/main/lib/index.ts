@@ -1,7 +1,7 @@
 import { appDirectoryName, fileEncoding } from '@shared/constants'
 import { IdeaInfo } from '@shared/models'
-import { GetIdeas, ReadIdea } from '@shared/types'
-import { ensureDir, readFile, readdir, stat } from 'fs-extra'
+import { GetIdeas, ReadIdea, WriteIdea } from '@shared/types'
+import { ensureDir, readFile, readdir, stat, writeFile } from 'fs-extra'
 import { homedir } from 'os'
 
 export const getRootDir = () => {
@@ -27,4 +27,10 @@ export const getIdeaInfoFromFileName = async (filename: string): Promise<IdeaInf
 export const readIdea: ReadIdea = async (filename) => {
   const rootDir = getRootDir()
   return readFile(`${rootDir}/${filename}.md`, { encoding: fileEncoding })
+}
+
+export const writeIdea: WriteIdea = async (filename, content) => {
+  const rootDir = getRootDir()
+  console.info(`Writing ${filename}`)
+  return writeFile(`${rootDir}/${filename}.md`, content, { encoding: fileEncoding })
 }

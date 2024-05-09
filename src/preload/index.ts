@@ -1,4 +1,4 @@
-import { GetIdeas, ReadIdea } from '@shared/types'
+import { GetIdeas, ReadIdea, WriteIdea } from '@shared/types'
 import { contextBridge, ipcRenderer } from 'electron'
 
 if (!process.contextIsolated) {
@@ -9,7 +9,8 @@ try {
   contextBridge.exposeInMainWorld('context', {
     locale: navigator.language,
     getIdeas: (...args: Parameters<GetIdeas>) => ipcRenderer.invoke('getIdeas', ...args),
-    readIdea: (...args: Parameters<ReadIdea>) => ipcRenderer.invoke('readIdea', ...args)
+    readIdea: (...args: Parameters<ReadIdea>) => ipcRenderer.invoke('readIdea', ...args),
+    writeIdea: (...args: Parameters<WriteIdea>) => ipcRenderer.invoke('writeIdea', ...args)
   })
 } catch (e) {
   console.log(e)

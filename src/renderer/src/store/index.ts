@@ -1,4 +1,4 @@
-import { IdeaInfo } from '@shared/models'
+import { IdeaContent, IdeaInfo } from '@shared/models'
 import { atom } from 'jotai'
 import { unwrap } from 'jotai/utils'
 
@@ -37,6 +37,25 @@ export const selectedIdeaAtom = unwrap(
       lastUpdatedAt: Date.now()
     }
 )
+
+export const saveIdeaAtom = atom(null, async (get, set, newContent: IdeaContent) => {
+  const ideas = get(IdeasAtom)
+  const selectedIdea = get(selectedIdeaAtom)
+  if (!selectedIdea || !ideas) return
+  await window.context.writeIdea(selectedIdea.title, newContent)
+  set(
+    IdeasAtom,
+    ideas.map((idea) => {
+      if (idea.title === selectedIdea.title) {
+        return {
+          ...idea,
+          lastUpdatedAt: Date.now()
+        }
+      }
+      return idea
+    })
+  )
+})
 
 export const createEmptyIdeaAtom = atom(null, (get, set) => {
   const ideas = get(IdeasAtom)
