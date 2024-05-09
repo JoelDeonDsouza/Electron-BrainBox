@@ -1,4 +1,4 @@
-import { GetIdeas, ReadIdea, WriteIdea } from '@shared/types'
+import { CreateIdea, DeleteIdea, GetIdeas, ReadIdea, WriteIdea } from '@shared/types'
 
 declare global {
   interface Window {
@@ -7,6 +7,8 @@ declare global {
       getIdeas: GetIdeas
       readIdea: ReadIdea
       writeIdea: WriteIdea
+      createIdea: CreateIdea
+      deleteIdea: DeleteIdea
     }
   }
 }

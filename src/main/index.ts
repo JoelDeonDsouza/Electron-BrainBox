@@ -1,6 +1,6 @@
-import { getIdeas, readIdea, writeIdea } from '@/lib'
+import { createIdea, deleteIdea, getIdeas, readIdea, writeIdea } from '@/lib'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { GetIdeas, ReadIdea, WriteIdea } from '@shared/types'
+import { CreateIdea, DeleteIdea, GetIdeas, ReadIdea, WriteIdea } from '@shared/types'
 import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
@@ -64,6 +64,8 @@ app.whenReady().then(() => {
   ipcMain.handle('getIdeas', (_, ...args: Parameters<GetIdeas>) => getIdeas(...args))
   ipcMain.handle('readIdea', (_, ...args: Parameters<ReadIdea>) => readIdea(...args))
   ipcMain.handle('writeIdea', (_, ...args: Parameters<WriteIdea>) => writeIdea(...args))
+  ipcMain.handle('createIdea', (_, ...args: Parameters<CreateIdea>) => createIdea(...args))
+  ipcMain.handle('deleteIdea', (_, ...args: Parameters<DeleteIdea>) => deleteIdea(...args))
 
   createWindow()
 

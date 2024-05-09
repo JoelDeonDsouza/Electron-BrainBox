@@ -5,8 +5,10 @@ import { IoMdTrash } from 'react-icons/io'
 
 export const TrashIdeaBtn = ({ ...props }: ActionBtnProps) => {
   const deleteIdea = useSetAtom(deleteIdeaAtom)
-  const handleDelete = () => {
-    deleteIdea()
+
+  // delete handle //
+  const handleDelete = async () => {
+    await deleteIdea()
   }
   return (
     <ActionBtn onClick={handleDelete} {...props}>

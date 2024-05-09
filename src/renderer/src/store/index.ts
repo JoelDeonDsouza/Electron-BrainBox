@@ -57,10 +57,12 @@ export const saveIdeaAtom = atom(null, async (get, set, newContent: IdeaContent)
   )
 })
 
-export const createEmptyIdeaAtom = atom(null, (get, set) => {
+// Create a new content //
+export const createEmptyIdeaAtom = atom(null, async (get, set) => {
   const ideas = get(IdeasAtom)
   if (!ideas) return
-  const title = `Ideas at ${ideas.length + 1}`
+  const title = await window.context.createIdea()
+  if (!title) return
   const newIdea: IdeaInfo = {
     title,
     lastUpdated: Date.now()
@@ -70,10 +72,13 @@ export const createEmptyIdeaAtom = atom(null, (get, set) => {
   set(selectedIdeaIndexAtom, 0)
 })
 
-export const deleteIdeaAtom = atom(null, (get, set) => {
+// Delete idea //
+export const deleteIdeaAtom = atom(null, async (get, set) => {
   const ideas = get(IdeasAtom)
   const selectedIdea = get(selectedIdeaAtom)
   if (!selectedIdea || !ideas) return
+  const isDeleted = await window.context.deleteIdea(selectedIdea.title)
+  if (!isDeleted) return
   set(
     IdeasAtom,
     ideas.filter((idea) => idea.title !== selectedIdea.title)
