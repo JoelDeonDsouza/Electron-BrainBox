@@ -1,4 +1,6 @@
+import { getIdeas, readIdea } from '@/lib'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { GetIdeas, ReadIdea } from '@shared/types'
 import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
@@ -58,7 +60,9 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.handle('getIdeas', (_, ...args: Parameters<GetIdeas>) => getIdeas(...args))
+  ipcMain.handle('readIdea', (_, ...args: Parameters<ReadIdea>) => readIdea(...args))
 
   createWindow()
 
