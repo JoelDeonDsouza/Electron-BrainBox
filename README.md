@@ -1,34 +1,58 @@
-# brain-box
+# Electron-BrainBox
 
-An Electron application with React and TypeScript
+BrainBox is a cross-platform desktop application built with Electron and TypeScript that allows users to efficiently take and store notes.
 
-## Recommended IDE Setup
+## Screenshots
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+![App Screenshot](https://i.ibb.co/2MWGR9j/img.png)
+![App Screenshot](https://i.ibb.co/R9JvKz2/img2.png)
 
-## Project Setup
+## Tech Stack
 
-### Install
+**Client:** Electron, TypeScript, Tailwind, Mdxeditor, jotai
+
+**Server:** Node.js
+
+## Features
+
+- Simple Interface: Clean and user-friendly interface for easy note-taking.
+- Markdown Support: Write notes in Markdown format for enhanced formatting.
+- Multiple Notebooks: Organize notes into different notebooks for better categorization.
+- Cross-Platform: Works seamlessly on Windows, macOS, and Linux.
+
+## Run Locally
+
+Clone the project
 
 ```bash
-$ npm install
+  git clone https://github.com/JoelDeonDsouza/Electron-BrainBox.git
 ```
 
-### Development
+Go to the project directory
 
 ```bash
-$ npm run dev
+  cd my-project
 ```
 
-### Build
+Install dependencies
 
 ```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
+  npm install
 ```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+## Local Storage
+
+```bash
+This modification instructs users to create a local folder named `IdeaMark` to store files. Alternatively, it mentions the possibility of changing the storage location by modifying the `getRootDir()` function in the `lib/index.ts` file.
+```
+
+## Usage
+
+- Create a New Note: Click on the "New Note" button to create a new note. Write your content in the text editor.
+- Edit Note: Double-click on a note in the list to edit it.
