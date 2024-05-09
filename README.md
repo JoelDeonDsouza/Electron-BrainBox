@@ -48,9 +48,7 @@ Start the server
 
 ## Local Storage
 
-```bash
-This modification instructs users to create a local folder named `IdeaMark` to store files. Alternatively, it mentions the possibility of changing the storage location by modifying the `getRootDir()` function in the `lib/index.ts` file.
-```
+- This modification instructs users to create a local folder named `IdeaMark` to store files. Alternatively, it mentions the possibility of changing the storage location by modifying the `getRootDir()` function in the `lib/index.ts` file.
 
 ## Usage
 
